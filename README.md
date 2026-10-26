@@ -2,7 +2,7 @@
 
 A spatial landing page for the Hoosh Sazeh × Donya-ye Mes workshop. Scrolling flies a camera across a dark 3D map. The copper route is an infinity sign (∞): ChatGPT is the left loop, Gemini the right loop, and they cross at the center. One trip goes around both loops and back to the center, lighting the ∞ as you go. The route shape and station spacing live in `src/stops.js`.
 
-**Live:** https://ai-workshop-landing-one.vercel.app/ (hosted on Vercel; the GitHub repo is private). Deploy with `npx vercel deploy --prod`, or connect the repo in the Vercel dashboard to deploy on every push.
+**Live:** https://ai-workshop-landing-one.vercel.app/ (Vercel) and https://noorz33.github.io/ai-workshop-landing/ (GitHub Pages). Every push to `main` redeploys the GitHub Pages copy automatically (`.github/workflows/deploy.yml`). Redeploy Vercel with `npx vercel deploy --prod`, or connect the repo under Settings → Git in the Vercel dashboard.
 
 ## Run
 
