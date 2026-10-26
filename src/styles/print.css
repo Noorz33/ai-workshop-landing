@@ -1,0 +1,63 @@
+/* Printable syllabus: the same content as a clean light A4 document (also used to build /syllabus.pdf) */
+@page { size: A4; margin: 15mm 16mm 16mm }
+@media print {
+  :root { --tx: #16161a; --mut: #4a4a52; --dim: #6b6b74; --line: #e3e0da; --acc: #16161a; --acc-soft: transparent }
+  html, body { background: #fff !important; color: var(--tx) !important; font-size: 11pt; line-height: 1.75 }
+  #world, .veil, .grain, .loader, .markers, .mini, .index, .track, .cue, .skip, .hdr-end, .nav, .hdr-progress,
+  .art, .stop.stop--wide, .fin-cta, .stop--finale .hero-kicker, .stop--finale .wide-h, .stop--finale .wide-p { display: none !important }
+  .art[data-art="prep"] { display: block !important; position: static !important; opacity: 1 !important; transform: none !important; width: auto !important; zoom: 1 !important }
+  .art[data-art="prep"]::before, .art[data-art="prep"]::after { display: none !important }
+  #journey { position: static !important }
+  .hdr { position: static !important; background: none !important; border: 0 !important; height: auto; padding: 0 0 6mm; backdrop-filter: none !important }
+  .brand-mark, .brand-word { filter: invert(1) }
+  .stop { position: static !important; display: block !important; visibility: visible !important; padding: 0 0 7mm !important; min-height: 0 !important; text-align: start !important; break-inside: avoid-page }
+  .panel, .hero-in, .fin-in { opacity: 1 !important; transform: none !important; width: auto !important; max-height: none !important; overflow: visible !important; background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; backdrop-filter: none !important; border-radius: 0 }
+  .panel::before { display: none }
+  .stop--hero { padding-bottom: 9mm !important; border-bottom: 1.5pt solid #16161a; margin-bottom: 8mm }
+  .hero-in { justify-items: start !important; gap: 3mm !important; max-width: none }
+  [data-in] { opacity: 1 !important; transform: none !important; filter: none !important }
+  .hero-kicker { border: 0; padding: 0; background: none; color: var(--dim) }
+  .dot { display: none }
+  .hero-h { justify-items: start }
+  .h-a { font-size: 15pt; color: var(--mut) }
+  .h-b { font-size: 34pt !important; white-space: nowrap; display: block !important }
+  .h-b .lt:first-child, .gem-txt { background: none !important; -webkit-background-clip: border-box !important; color: #16161a !important }
+  .h-b i { color: var(--dim) }
+  .hero-for { color: var(--mut) }
+  .hero-for b { color: #a8531f }
+  .facts { justify-content: flex-start; gap: 3mm }
+  .facts li { min-width: 0; padding: 2mm 4mm; border-color: var(--line); background: none; backdrop-filter: none }
+  .facts b { background: none; color: #16161a; -webkit-background-clip: border-box; font-size: 15pt }
+  .p-num { background: #16161a !important; color: #fff !important; box-shadow: none !important; width: 9mm; height: 9mm; border-radius: 2.5mm; font-size: 10pt }
+  .p-dur { background: #f3f1ed; border-color: var(--line); color: var(--tx) }
+  .p-dur--break { color: #a8531f; background: #fbf1ea }
+  .brand-ico { filter: invert(1) }
+  .brand-ico[src*="gemini"] { filter: none }
+  .panel h3, .p-h2 { font-size: 14.5pt; margin-bottom: 2mm }
+  .stop--hub { border-top: 1pt solid var(--line); padding-top: 5mm !important }
+  .stop--hub .p-h2 { font-size: 18pt }
+  .topics li, .agenda li a, .outs li, .p-lead, .note, .task { color: var(--tx) !important }
+  .topics li { padding-block: 1mm }
+  .topics li::before { background: #16161a; opacity: .5 }
+  .agenda li a { padding-block: 1mm }
+  .task { background: #fbf6f1; border-color: #ecd9c8 }
+  .task b { color: #a8531f }
+  .task--thread { background: #f4f3fb; border-color: #dcd8f0 }
+  .task--thread b { background: none; color: #5a4aa8; -webkit-background-clip: border-box }
+  .outs li { background: none; border-color: var(--line) }
+  .outs li::before { background-color: #16161a; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 12.5 4 4L18 8' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") }
+  .note { border-color: var(--line) }
+  .ck { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; backdrop-filter: none !important }
+  .ck-ring, .ck-count { display: none }
+  .ck-box { border-color: #16161a }
+  .ck-list label { padding-block: 1mm; color: var(--tx) }
+  .stop--finale { display: block !important }
+  .foot { margin-top: 4mm; justify-items: start; opacity: 1 !important }
+  .foot-brands img[src*="hooshsazeh"] { filter: invert(1) }
+  .foot-brands img { height: 16mm }
+  .foot-brands figure:last-child img { height: 11mm }
+  .foot-brands figcaption, .tm { color: var(--dim) }
+  .tm { text-align: start }
+  .flat body { background: #fff }
+  .sep { background: #16161a }
+}

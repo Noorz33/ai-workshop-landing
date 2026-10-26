@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# original source material (processed versions live in public/brand)
+*.docx
+Hoosh saze logo .png
+donyay mes logo .png

@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>کارگاه کاربردی ChatGPT و Gemini | هوش‌سازه × دنیای مس</title>
+  <meta name="description" content="دو کارگاه سه‌ساعته‌ی مقدماتی و عملی ویژه‌ی مدیران و کارشناسان شرکت دنیای مس: از شخصی‌سازی ChatGPT و تحلیل فایل‌های اکسل تا Deep Research، Google Docs، Sheets و Slides با Gemini." />
+  <meta name="theme-color" content="#050507" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://noorz33.github.io/ai-workshop-landing/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fa_IR" />
+  <meta property="og:title" content="کارگاه کاربردی ChatGPT و Gemini" />
+  <meta property="og:description" content="ویژه‌ی مدیران و کارشناسان دنیای مس — دو کارگاه سه‌ساعته — ۱۴ سرفصل — ۹ خروجی کاربردی" />
+  <meta property="og:url" content="https://noorz33.github.io/ai-workshop-landing/" />
+  <meta property="og:image" content="https://noorz33.github.io/ai-workshop-landing/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "کارگاه کاربردی ChatGPT و Gemini",
+    "description": "دو کارگاه سه‌ساعته‌ی مقدماتی و عملی برای استفاده‌ی مستقل از هوش مصنوعی در فعالیت‌های روزمره‌ی سازمانی؛ ویژه‌ی مدیران و کارشناسان شرکت دنیای مس.",
+    "inLanguage": "fa",
+    "provider": { "@type": "Organization", "name": "Hoosh Sazeh (Hoosh-saze Zarrin Gostar Group)" },
+    "audience": { "@type": "BusinessAudience", "name": "مدیران و کارشناسان شرکت دنیای مس" },
+    "timeRequired": "PT6H",
+    "educationalLevel": "Beginner",
+    "teaches": ["ChatGPT", "Gemini", "Deep Research", "Google Docs", "Google Sheets", "Google Slides", "Prompt writing", "Data analysis"]
+  }
+  </script>
+  <script>
+    // Pick the presentation before first paint: spatial map (WebGL) or the flat document.
+    (function () {
+      var d = document.documentElement, gl = false
+      try { gl = !!document.createElement('canvas').getContext('webgl2') } catch (e) {}
+      var calm = matchMedia('(prefers-reduced-motion: reduce)').matches
+      var save = navigator.connection && navigator.connection.saveData
+      var forced = /[?&]flat\b/.test(location.search)
+      d.classList.add('js', gl && !calm && !save && !forced ? 'spatial' : 'flat')
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+      // the module bundle owns the loader; this only rescues a bundle that never arrives
+      setTimeout(function () {
+        if (d.classList.contains('booted')) return
+        d.classList.remove('spatial'); d.classList.add('flat', 'booted')
+      }, 9000)
+    })()
+  </script>
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#s1">رفتن به سرفصل‌ها</a>
+
+  <canvas id="world" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="loader" id="loader" role="status" aria-live="polite">
+    <img class="loader-mark" src="brand/hooshsazeh-mark-white.png" alt="" width="96" height="96" />
+    <div class="loader-line"><i id="loaderBar"></i></div>
+    <p class="loader-txt">در حال آماده‌سازی نقشه‌ی کارگاه…</p>
+  </div>
+
+  <header class="hdr" id="hdr">
+    <a class="brand" href="#hero" aria-label="هوش‌سازه — بازگشت به ابتدا">
+      <img class="brand-mark" src="brand/hooshsazeh-mark-white.png" alt="" width="34" height="34" />
+      <img class="brand-word" src="brand/hooshsazeh-wordmark-white.png" alt="Hoosh Sazeh" width="120" height="29" />
+    </a>
+    <nav class="nav" aria-label="بخش‌های کارگاه">
+      <a href="#s1" data-nav="s1"><b>جلسه اول</b><span>ChatGPT</span></a>
+      <a href="#s2" data-nav="s2"><b>جلسه دوم</b><span>Gemini</span></a>
+      <a href="#prep" data-nav="prep"><b>آماده‌سازی</b><span>پیش از کارگاه</span></a>
+    </nav>
+    <div class="hdr-end">
+      <button class="btn btn--ghost btn--sm" type="button" id="indexBtn" aria-haspopup="dialog" aria-controls="index">
+        <svg class="i" aria-hidden="true"><use href="#i-map" /></svg><span>نقشه‌ی سرفصل‌ها</span>
+      </button>
+      <a class="btn btn--copper btn--sm hdr-cta" href="syllabus.pdf" download>
+        <svg class="i" aria-hidden="true"><use href="#i-dl" /></svg><span>دریافت سیلابس</span>
+      </a>
+    </div>
+    <div class="hdr-progress" aria-hidden="true"><i id="progBar"></i></div>
+  </header>
+
+  <!-- scroll length for the spatial journey -->
+  <div class="track" id="track" aria-hidden="true"></div>
+
+  <main id="journey">
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="stop stop--hero" id="hero" data-stop>
+      <div class="hero-in">
+        <p class="hero-kicker" data-in><span class="dot"></span>کارگاه آموزشی<i class="sep" aria-hidden="true"></i>مقدماتی و عملی</p>
+        <h1 class="hero-h" data-in>
+          <span class="h-a">کارگاه کاربردی</span>
+          <span class="h-b"><span class="lt" lang="en">ChatGPT</span> <i>و</i> <span class="lt gem-txt" lang="en">Gemini</span></span>
+        </h1>
+        <p class="hero-for" data-in>
+          <img src="brand/copperworld-mark.webp" alt="" width="46" height="42" />
+          <span>ویژه‌ی مدیران و کارشناسان <b>شرکت دنیای مس</b></span>
+        </p>
+        <p class="hero-goal" data-in>هدف: استفاده‌ی مستقل از هوش مصنوعی برای انجام فعالیت‌های روزمره‌ی سازمانی</p>
+        <ul class="facts" data-in aria-label="ساختار دوره">
+          <li><b>۲</b><span>کارگاه سه‌ساعته</span></li>
+          <li><b>۶</b><span>ساعت آموزش عملی</span></li>
+          <li><b>۱۴</b><span>سرفصل</span></li>
+          <li><b>۹</b><span>خروجی کاربردی</span></li>
+        </ul>
+      </div>
+      <button class="cue" type="button" data-go="s1" data-in>
+        <span class="cue-line" aria-hidden="true"><i></i></span>
+        <span>اسکرول کن تا چراغ‌های نقشه روشن شوند</span>
+      </button>
+    </section>
+
+    <!-- ═══════════ SESSION 1<i class="sep" aria-hidden="true"></i>HUB ═══════════ -->
+    <section class="stop stop--hub" id="s1" data-stop data-terr="gpt" aria-labelledby="s1-t">
+      <div class="panel">
+        <p class="p-tag"><img class="brand-ico blossom vlogo" src="brand/openai-blossom-white.svg" alt="" width="20" height="20" /><span>جلسه‌ی اول<i class="sep" aria-hidden="true"></i>۳ ساعت</span></p>
+        <h2 id="s1-t" class="p-h2"><span class="lt" lang="en">ChatGPT</span>؛ دستیار هوشمند برای کارهای روزانه</h2>
+        <p class="p-lead">از اولین ورود تا تحویل یک گزارش قابل استفاده؛ هفت ایستگاه که هرکدام با یک تمرین روی کار واقعی خودتان تمام می‌شود.</p>
+        <ol class="agenda" data-agenda>
+          <li data-to="m1"><a href="#m1"><span>محیط ChatGPT و نسخه‌ی دسکتاپ</span><em>۲۵′</em></a></li>
+          <li data-to="m2"><a href="#m2"><span>شخصی‌سازی و تنظیمات</span><em>۱۵′</em></a></li>
+          <li data-to="m3"><a href="#m3"><span>ساخت پروژه و مدیریت اطلاعات</span><em>۳۰′</em></a></li>
+          <li data-to="m4"><a href="#m4"><span>اصول درخواست‌نویسی مؤثر</span><em>۲۰′</em></a></li>
+          <li data-to="m5"><a href="#m5"><span>تحلیل داده و کار با فایل‌ها</span><em>۴۰′</em></a></li>
+          <li data-to="m6"><a href="#m6"><span>تولید فایل و کارهای چندمرحله‌ای</span><em>۲۵′</em></a></li>
+          <li data-to="m7"><a href="#m7"><span>تسک‌ها و جمع‌بندی</span><em>۱۵′</em></a></li>
+        </ol>
+      </div>
+      <div class="art" data-art="s1" role="group" aria-label="زمان‌بندی جلسه‌ی اول"></div>
+    </section>
+
+    <!-- ═══════════ M1 ═══════════ -->
+    <section class="stop" id="m1" data-stop data-terr="gpt" aria-labelledby="m1-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۱</span><span class="p-tag">جلسه‌ی اول<i class="sep" aria-hidden="true"></i>ChatGPT</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۲۵ دقیقه</span></div>
+        <h3 id="m1-t">محیط ChatGPT، نسخه‌ی دسکتاپ و حساب کاربری</h3>
+        <ul class="topics">
+          <li data-hot="ui">آشنایی با محیط ChatGPT و بخش‌های اصلی آن</li>
+          <li data-hot="desk">معرفی اپلیکیشن دسکتاپ در ویندوز و مک</li>
+          <li data-hot="launch">دسترسی سریع به ChatGPT بدون نیاز به بازکردن مرورگر</li>
+          <li data-hot="files">کار با فایل‌ها، تصاویر و اسکرین‌شات‌های محیط کامپیوتر</li>
+          <li data-hot="mode">آشنایی مقدماتی با Chat، Work و کاربرد هرکدام</li>
+          <li data-hot="plans">تفاوت حساب رایگان، اشتراک فردی و اشتراک سازمانی</li>
+          <li data-hot="plans">چرایی استفاده از حساب اختصاصی برای کار روزمره</li>
+        </ul>
+        <p class="task"><b>نمایش زنده</b>ارسال یک اسکرین‌شات و یک فایل اکسل از کامپیوتر به ChatGPT و دریافت تحلیل اولیه.</p>
+      </div>
+      <div class="art" data-art="m1" role="group" aria-label="نمایش تعاملی: اپ دسکتاپ ChatGPT"></div>
+    </section>
+
+    <!-- ═══════════ M2 ═══════════ -->
+    <section class="stop" id="m2" data-stop data-terr="gpt" aria-labelledby="m2-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۲</span><span class="p-tag">جلسه‌ی اول<i class="sep" aria-hidden="true"></i>ChatGPT</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۱۵ دقیقه</span></div>
+        <h3 id="m2-t">شخصی‌سازی و تنظیمات</h3>
+        <ul class="topics">
+          <li data-hot="ci">تنظیم دستورالعمل‌های شخصی</li>
+          <li data-hot="mem">آشنایی با حافظه و تنظیمات حریم خصوصی</li>
+          <li data-hot="role">تنظیم پاسخ‌ها متناسب با نقش شغلی</li>
+        </ul>
+        <p class="task"><b>تمرین</b>شخصی‌سازی ChatGPT هر شرکت‌کننده.</p>
+      </div>
+      <div class="art" data-art="m2" role="group" aria-label="نمایش تعاملی: شخصی‌سازی پاسخ‌ها"></div>
+    </section>
+
+    <!-- ═══════════ M3 ═══════════ -->
+    <section class="stop" id="m3" data-stop data-terr="gpt" aria-labelledby="m3-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۳</span><span class="p-tag">جلسه‌ی اول<i class="sep" aria-hidden="true"></i>ChatGPT</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۳۰ دقیقه</span></div>
+        <h3 id="m3-t">ساخت پروژه و مدیریت اطلاعات</h3>
+        <ul class="topics">
+          <li data-hot="goal">ایجاد Project و تعریف هدف آن</li>
+          <li data-hot="refs">افزودن دستورالعمل‌ها و فایل‌های مرجع</li>
+          <li data-hot="chats">مدیریت گفت‌وگوهای مرتبط</li>
+          <li data-hot="reuse">استفاده‌ی مجدد از اطلاعات در کارهای بعدی</li>
+        </ul>
+        <p class="task"><b>تمرین</b>ساخت پروژه‌ای مرتبط با واحد کاری شرکت‌کننده.</p>
+      </div>
+      <div class="art" data-art="m3" role="group" aria-label="نمایش تعاملی: پروژه در ChatGPT"></div>
+    </section>
+
+    <!-- ═══════════ M4 ═══════════ -->
+    <section class="stop" id="m4" data-stop data-terr="gpt" aria-labelledby="m4-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۴</span><span class="p-tag">جلسه‌ی اول<i class="sep" aria-hidden="true"></i>ChatGPT</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۲۰ دقیقه</span></div>
+        <h3 id="m4-t">اصول درخواست‌نویسی مؤثر</h3>
+        <ul class="topics">
+          <li data-hot="slots">تعریف دقیق مسئله، زمینه و خروجی مورد انتظار</li>
+          <li data-hot="refine">گفت‌وگوی مرحله‌ای و اصلاح پاسخ</li>
+          <li data-hot="verify">بررسی صحت و اعتبار نتایج</li>
+        </ul>
+        <p class="task"><b>تمرین</b>حل یک مسئله‌ی کاری با چند مرحله گفت‌وگو.</p>
+      </div>
+      <div class="art" data-art="m4" role="group" aria-label="نمایش تعاملی: ساخت درخواست مؤثر"></div>
+    </section>
+
+    <!-- ═══════════ M5 ═══════════ -->
+    <section class="stop" id="m5" data-stop data-terr="gpt" aria-labelledby="m5-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۵</span><span class="p-tag">جلسه‌ی اول<i class="sep" aria-hidden="true"></i>ChatGPT</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۴۰ دقیقه</span></div>
+        <h3 id="m5-t">تحلیل داده و کار با فایل‌ها</h3>
+        <ul class="topics">
+          <li data-hot="up">بارگذاری Excel، CSV، PDF و اسناد</li>
+          <li data-hot="diff">تحلیل اطلاعات، مقایسه‌ی داده‌ها و شناسایی مغایرت‌ها</li>
+          <li data-hot="chart">ساخت جدول، محاسبه‌ی شاخص‌ها و ایجاد نمودار</li>
+          <li data-hot="insight">تبدیل داده‌های خام به یافته‌های مدیریتی</li>
+        </ul>
+        <p class="task"><b>تمرین</b>تحلیل یک فایل نمونه‌ی فروش، سفارش یا تولید.</p>
+      </div>
+      <div class="art" data-art="m5" role="group" aria-label="نمایش تعاملی: تحلیل فایل داده"></div>
+    </section>
+
+    <!-- ═══════════ M6 ═══════════ -->
+    <section class="stop" id="m6" data-stop data-terr="gpt" aria-labelledby="m6-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۶</span><span class="p-tag">جلسه‌ی اول<i class="sep" aria-hidden="true"></i>ChatGPT</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۲۵ دقیقه</span></div>
+        <h3 id="m6-t">تولید فایل و انجام کارهای چندمرحله‌ای</h3>
+        <ul class="topics">
+          <li data-hot="report">تهیه‌ی گزارش و فایل خروجی</li>
+          <li data-hot="deck">ساخت شیت و ارائه از داده‌های موجود</li>
+          <li data-hot="work">آشنایی عملی با ChatGPT Work برای انجام کارهای چندمرحله‌ای، در حساب‌های دارای دسترسی</li>
+        </ul>
+        <p class="task"><b>تمرین</b>تبدیل تحلیل مرحله‌ی قبل به یک خروجی قابل ارائه.</p>
+      </div>
+      <div class="art" data-art="m6" role="group" aria-label="نمایش تعاملی: اجرای کار چندمرحله‌ای"></div>
+    </section>
+
+    <!-- ═══════════ M7 ═══════════ -->
+    <section class="stop" id="m7" data-stop data-terr="gpt" aria-labelledby="m7-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۷</span><span class="p-tag">جلسه‌ی اول<i class="sep" aria-hidden="true"></i>ChatGPT</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۱۵ دقیقه</span></div>
+        <h3 id="m7-t">تسک‌ها و جمع‌بندی</h3>
+        <ul class="topics">
+          <li data-hot="tasks">آشنایی با Tasks و زمان‌بندی فعالیت‌ها</li>
+          <li data-hot="freq">تعریف نمونه‌ی یادآوری یا کار دوره‌ای</li>
+          <li data-hot="toast">مرور خروجی نهایی و پرسش‌ها</li>
+        </ul>
+      </div>
+      <div class="art" data-art="m7" role="group" aria-label="نمایش تعاملی: زمان‌بندی تسک"></div>
+    </section>
+
+    <!-- ═══════════ OUTCOME 1 ═══════════ -->
+    <section class="stop stop--outcome" id="out1" data-stop data-terr="gpt" aria-labelledby="out1-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-tag">پایان جلسه‌ی اول</span><span class="p-dur p-dur--break"><svg class="i" aria-hidden="true"><use href="#i-cup" /></svg>استراحت: ۱۰ دقیقه</span></div>
+        <h3 id="out1-t">خروجی جلسه</h3>
+        <p class="p-lead">هر شرکت‌کننده با چهار خروجی واقعی از جلسه بیرون می‌رود:</p>
+        <ul class="outs">
+          <li>حساب شخصی‌سازی‌شده</li>
+          <li>یک پروژه‌ی کاری</li>
+          <li>تحلیل یک فایل داده</li>
+          <li>یک گزارش قابل استفاده</li>
+        </ul>
+      </div>
+      <div class="art" data-art="out1" role="group" aria-label="خروجی‌های جلسه‌ی اول"></div>
+    </section>
+
+    <!-- ═══════════ BRIDGE ═══════════ -->
+    <section class="stop stop--wide" id="bridge" data-stop aria-labelledby="bridge-t">
+      <div class="wide-in">
+        <p class="hero-kicker"><span class="dot dot--gem"></span>نیمه‌ی دوم نقشه</p>
+        <h2 id="bridge-t" class="wide-h">دو کارگاه، <em>یک مسیر</em></h2>
+        <p class="wide-p">در جلسه‌ی اول کار روزانه را با ChatGPT سریع‌تر می‌کنید؛ در جلسه‌ی دوم با Gemini، از تحقیق تا سند، شیت و ارائه را در Google Workspace می‌سازید.</p>
+        <ul class="facts facts--count">
+          <li><b data-count="2">۲</b><span>کارگاه</span></li>
+          <li><b data-count="6">۶</b><span>ساعت</span></li>
+          <li><b data-count="14">۱۴</b><span>سرفصل</span></li>
+          <li><b data-count="9">۹</b><span>خروجی</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════ SESSION 2<i class="sep" aria-hidden="true"></i>HUB ═══════════ -->
+    <section class="stop stop--hub" id="s2" data-stop data-terr="gem" aria-labelledby="s2-t">
+      <div class="panel">
+        <p class="p-tag"><img class="brand-ico vlogo" src="brand/gemini-sparkle.webp" alt="" width="20" height="20" /><span>جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>۳ ساعت</span></p>
+        <h2 id="s2-t" class="p-h2"><span class="lt" lang="en">Gemini</span>؛ از تحقیق تا تولید خروجی در Google Workspace</h2>
+        <p class="p-lead">یک تمرین پیوسته، کل جلسه را به هم وصل می‌کند: تحقیق درباره‌ی یک مسئله‌ی مرتبط با صنعت مس، تنظیم داده‌ها در Sheets، تهیه‌ی گزارش در Docs و تبدیل نتایج به یک ارائه‌ی کوتاه در Slides.</p>
+        <ol class="agenda" data-agenda>
+          <li data-to="g1"><a href="#g1"><span>آشنایی با Gemini و اکوسیستم Google AI</span><em>۲۰′</em></a></li>
+          <li data-to="g2"><a href="#g2"><span>تحقیق، جست‌وجو و Deep Research</span><em>۳۵′</em></a></li>
+          <li data-to="g3"><a href="#g3"><span>ساخت و ویرایش اسناد در Google Docs</span><em>۲۵′</em></a></li>
+          <li data-to="g4"><a href="#g4"><span>ساخت جدول، فرمول و تحلیل در Google Sheets</span><em>۴۰′</em></a></li>
+          <li data-to="g5"><a href="#g5"><span>ساخت ارائه با Google Slides</span><em>۲۵′</em></a></li>
+          <li data-to="g6"><a href="#g6"><span>تولید و اصلاح تصویر با Gemini</span><em>۱۵′</em></a></li>
+          <li data-to="g7"><a href="#g7"><span>تمرین نهایی و جمع‌بندی</span><em>۱۰′</em></a></li>
+        </ol>
+      </div>
+      <div class="art" data-art="s2" role="group" aria-label="زمان‌بندی جلسه‌ی دوم"></div>
+    </section>
+
+    <!-- ═══════════ G1 ═══════════ -->
+    <section class="stop" id="g1" data-stop data-terr="gem" aria-labelledby="g1-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۱</span><span class="p-tag">جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>Gemini</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۲۰ دقیقه</span></div>
+        <h3 id="g1-t">آشنایی با Gemini و اکوسیستم Google AI</h3>
+        <ul class="topics">
+          <li data-hot="core">آشنایی با محیط Gemini و بخش‌های اصلی آن</li>
+          <li data-hot="apps">Gemini در Gmail، Docs، Sheets، Slides و Drive</li>
+          <li data-hot="acct">تفاوت حساب شخصی Google و حساب سازمانی Workspace</li>
+          <li data-hot="gems">ساخت Gem: دستیار اختصاصی برای کارهای تکراری</li>
+        </ul>
+      </div>
+      <div class="art" data-art="g1" role="group" aria-label="نمایش تعاملی: اکوسیستم Gemini"></div>
+    </section>
+
+    <!-- ═══════════ G2 ═══════════ -->
+    <section class="stop" id="g2" data-stop data-terr="gem" aria-labelledby="g2-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۲</span><span class="p-tag">جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>Gemini</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۳۵ دقیقه</span></div>
+        <h3 id="g2-t">تحقیق، جست‌وجو و Deep Research</h3>
+        <ul class="topics">
+          <li data-hot="q">جست‌وجوی هوشمند و دریافت پاسخ همراه با منبع</li>
+          <li data-hot="plan">تعریف موضوع تحقیق و بازبینی برنامه‌ی پژوهش</li>
+          <li data-hot="src">اجرای Deep Research و بررسی ده‌ها منبع</li>
+          <li data-hot="rep">ارزیابی منابع و انتقال گزارش به Google Docs</li>
+        </ul>
+        <p class="task task--thread"><b>تمرین پیوسته<i class="sep" aria-hidden="true"></i>گام ۱</b>تحقیق درباره‌ی یک مسئله‌ی مرتبط با صنعت مس.</p>
+      </div>
+      <div class="art" data-art="g2" role="group" aria-label="نمایش تعاملی: Deep Research"></div>
+    </section>
+
+    <!-- ═══════════ G3 ═══════════ -->
+    <section class="stop" id="g3" data-stop data-terr="gem" aria-labelledby="g3-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۳</span><span class="p-tag">جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>Gemini</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۲۵ دقیقه</span></div>
+        <h3 id="g3-t">ساخت و ویرایش اسناد در Google Docs</h3>
+        <ul class="topics">
+          <li data-hot="write">نوشتن پیش‌نویس با «کمک به نوشتن»</li>
+          <li data-hot="tone">بازنویسی، خلاصه‌سازی و تغییر لحن متن</li>
+          <li data-hot="doc">ساخت سند مدیریتی از یافته‌های تحقیق</li>
+        </ul>
+        <p class="task task--thread"><b>تمرین پیوسته<i class="sep" aria-hidden="true"></i>گام ۳</b>تهیه‌ی گزارش در Docs.</p>
+      </div>
+      <div class="art" data-art="g3" role="group" aria-label="نمایش تعاملی: نوشتن در Google Docs"></div>
+    </section>
+
+    <!-- ═══════════ G4 ═══════════ -->
+    <section class="stop" id="g4" data-stop data-terr="gem" aria-labelledby="g4-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۴</span><span class="p-tag">جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>Gemini</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۴۰ دقیقه</span></div>
+        <h3 id="g4-t">ساخت جدول، فرمول و تحلیل در Google Sheets</h3>
+        <ul class="topics">
+          <li data-hot="grid">ساخت جدول ساختاریافته از داده‌های خام</li>
+          <li data-hot="fx">نوشتن و توضیح فرمول‌ها با کمک Gemini</li>
+          <li data-hot="viz">تحلیل داده، جدول خلاصه و نمودار</li>
+          <li data-hot="ai">استخراج یافته‌های کلیدی از شیت</li>
+        </ul>
+        <p class="task task--thread"><b>تمرین پیوسته<i class="sep" aria-hidden="true"></i>گام ۲</b>تنظیم داده‌ها در Sheets. روی فرمول‌ها کلیک کنید.</p>
+      </div>
+      <div class="art art--wide" data-art="g4" role="group" aria-label="نمایش تعاملی: فرمول‌ها در Google Sheets"></div>
+    </section>
+
+    <!-- ═══════════ G5 ═══════════ -->
+    <section class="stop" id="g5" data-stop data-terr="gem" aria-labelledby="g5-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۵</span><span class="p-tag">جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>Gemini</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۲۵ دقیقه</span></div>
+        <h3 id="g5-t">ساخت ارائه با Google Slides</h3>
+        <ul class="topics">
+          <li data-hot="gen">ساخت اسلاید از روی سند و داده‌ها</li>
+          <li data-hot="story">طراحی ساختار یک ارائه‌ی مدیریتی</li>
+          <li data-hot="vis">افزودن نمودار و تصویر به اسلایدها</li>
+        </ul>
+        <p class="task task--thread"><b>تمرین پیوسته<i class="sep" aria-hidden="true"></i>گام ۴</b>تبدیل نتایج به یک ارائه‌ی کوتاه در Slides.</p>
+      </div>
+      <div class="art" data-art="g5" role="group" aria-label="نمایش تعاملی: ساخت ارائه"></div>
+    </section>
+
+    <!-- ═══════════ G6 ═══════════ -->
+    <section class="stop" id="g6" data-stop data-terr="gem" aria-labelledby="g6-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۶</span><span class="p-tag">جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>Gemini</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۱۵ دقیقه</span></div>
+        <h3 id="g6-t">تولید و اصلاح تصویر با Gemini</h3>
+        <ul class="topics">
+          <li data-hot="prompt">نوشتن درخواست دقیق برای تصویر</li>
+          <li data-hot="edit">اصلاح و ویرایش مرحله‌ای تصویر</li>
+          <li data-hot="use">استفاده از تصویر در سند و ارائه</li>
+        </ul>
+      </div>
+      <div class="art" data-art="g6" role="group" aria-label="نمایش تعاملی: تولید تصویر"></div>
+    </section>
+
+    <!-- ═══════════ G7 ═══════════ -->
+    <section class="stop stop--outcome" id="g7" data-stop data-terr="gem" aria-labelledby="g7-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-num">۰۷</span><span class="p-tag">جلسه‌ی دوم<i class="sep" aria-hidden="true"></i>Gemini</span><span class="p-dur"><svg class="i" aria-hidden="true"><use href="#i-clock" /></svg>۱۰ دقیقه</span></div>
+        <h3 id="g7-t">تمرین نهایی و جمع‌بندی</h3>
+        <p class="p-lead"><b>تمرین پیوسته:</b> تحقیق درباره‌ی یک مسئله‌ی مرتبط با صنعت مس، تنظیم داده‌ها در Sheets، تهیه‌ی گزارش در Docs و تبدیل نتایج به یک ارائه‌ی کوتاه در Slides.</p>
+        <p class="p-sub">خروجی جلسه</p>
+        <ul class="outs outs--gem">
+          <li>گزارش تحقیق</li>
+          <li>شیت تحلیلی</li>
+          <li>سند مدیریتی</li>
+          <li>ارائه</li>
+          <li>تصویر تولیدشده با هوش مصنوعی</li>
+        </ul>
+        <p class="p-dur p-dur--break p-dur--inline"><svg class="i" aria-hidden="true"><use href="#i-cup" /></svg>استراحت: ۱۰ دقیقه</p>
+      </div>
+      <div class="art" data-art="g7" role="group" aria-label="مسیر تمرین پیوسته"></div>
+    </section>
+
+    <!-- ═══════════ PREP ═══════════ -->
+    <section class="stop stop--prep" id="prep" data-stop data-terr="mix" aria-labelledby="prep-t">
+      <div class="panel">
+        <div class="p-meta"><span class="p-tag">پیش از کارگاه</span></div>
+        <h2 id="prep-t" class="p-h2">آماده‌سازی حساب‌ها پیش از برگزاری</h2>
+        <p class="p-lead">برای اجرای عملی دوره، لازم است هر شرکت‌کننده پیش از حضور در کارگاه حساب اختصاصی ChatGPT و Google خود را داشته باشد.</p>
+        <p class="note">استفاده از اشتراک پولی برای تمام تمرین‌های مقدماتی الزامی نیست؛ اما برای کارگاه بدون وقفه و تمرین کامل امکانات پیشرفته توصیه می‌شود. قابلیت‌ها ممکن است با نوع حساب و تنظیمات سازمان تفاوت داشته باشند.</p>
+      </div>
+      <div class="art" data-art="prep" role="group" aria-label="چک‌لیست آماده‌سازی">
+        <div class="ck glass-ui">
+          <div class="ck-head">
+            <svg class="ck-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" /><circle class="ck-ring-v" cx="22" cy="22" r="18" /></svg>
+            <div><b>پیشنهاد اجرایی</b><span class="ck-count" aria-live="polite">۰ از ۵ انجام شد</span></div>
+          </div>
+          <ul class="ck-list">
+            <li><label><input type="checkbox" /><span class="ck-box" aria-hidden="true"></span><span>ثبت‌نام و ورود به حساب‌ها قبل از روز آموزش انجام شود.</span></label></li>
+            <li><label><input type="checkbox" /><span class="ck-box" aria-hidden="true"></span><span>اپ ChatGPT Desktop روی سیستم‌های سازگار نصب و آزمایش شود.</span></label></li>
+            <li><label><input type="checkbox" /><span class="ck-box" aria-hidden="true"></span><span>برای تمرین قابلیت‌های پیشرفته، اشتراک متناسب با نیاز شرکت‌کنندگان تهیه شود.</span></label></li>
+            <li><label><input type="checkbox" /><span class="ck-box" aria-hidden="true"></span><span>برای کار با اطلاعات واقعی سازمان، استفاده از محیط سازمانی و رعایت سیاست‌های امنیت اطلاعات شرکت بررسی شود.</span></label></li>
+            <li><label><input type="checkbox" /><span class="ck-box" aria-hidden="true"></span><span>دسترسی به قابلیت‌های Gemini و Google Workspace پیش از کارگاه آزمایش شود.</span></label></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FINALE ═══════════ -->
+    <section class="stop stop--finale" id="finale" data-stop aria-labelledby="fin-t">
+      <div class="fin-in">
+        <p class="hero-kicker"><span class="dot dot--copper"></span>نقشه کامل شد</p>
+        <h2 id="fin-t" class="wide-h">از اولین گفت‌وگو<br /><em>تا خروجی قابل ارائه</em></h2>
+        <p class="wide-p">سیلابس کامل دو کارگاه را دریافت کنید یا مسیر را دوباره مرور کنید.</p>
+        <div class="fin-cta">
+          <a class="btn btn--copper btn--lg" href="syllabus.pdf" download><svg class="i" aria-hidden="true"><use href="#i-dl" /></svg><span>دریافت سیلابس کامل (PDF)</span></a>
+          <button class="btn btn--ghost btn--lg" type="button" data-go="hero"><svg class="i" aria-hidden="true"><use href="#i-up" /></svg><span>مرور دوباره‌ی نقشه</span></button>
+        </div>
+      </div>
+      <footer class="foot">
+        <div class="foot-brands">
+          <figure><img src="brand/hooshsazeh-lockup-white.png" alt="هوش‌سازه — Hoosh-saze Zarrin Gostar Group" width="94" height="100" /><figcaption>طراحی و اجرای کارگاه</figcaption></figure>
+          <span class="foot-x" aria-hidden="true">×</span>
+          <figure><img src="brand/copperworld-lockup.webp" alt="شرکت دنیای مس — Copper World Co." width="220" height="75" /><figcaption>ویژه‌ی مدیران و کارشناسان</figcaption></figure>
+        </div>
+        <p class="tm">ChatGPT و OpenAI علائم تجاری OpenAI هستند. Gemini، Google Workspace، Google Docs، Sheets و Slides علائم تجاری Google LLC هستند. این کارگاه وابستگی رسمی به این شرکت‌ها ندارد. داده‌ها و رابط‌های نمایش‌داده‌شده نمونه و برای آموزش هستند.</p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- map markers, minimap, index -->
+  <div class="markers" id="markers" aria-hidden="true"></div>
+  <nav class="mini" id="mini" aria-label="نقشه‌ی مسیر"></nav>
+
+  <div class="index" id="index" role="dialog" aria-modal="true" aria-labelledby="index-t" hidden>
+    <div class="index-bg" data-close></div>
+    <div class="index-card">
+      <div class="index-top">
+        <h2 id="index-t">نقشه‌ی سرفصل‌ها</h2>
+        <button class="index-x" type="button" data-close aria-label="بستن"><svg class="i" aria-hidden="true"><use href="#i-x" /></svg></button>
+      </div>
+      <div class="index-cols" id="indexCols"></div>
+    </div>
+  </div>
+
+  <!-- icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8" /><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V6m0 0-5.5 5.5M12 6l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-map" viewBox="0 0 24 24"><path d="m9 4.5-5 2v13l5-2 6 2 5-2v-13l-5 2-6-2Zm0 0v13m6-11v13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-cup" viewBox="0 0 24 24"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5V9Zm11 1.5h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5c0 1 1 1.5 1 2.5M11.5 3.5c0 1 1 1.5 1 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5-10-6.5Z" fill="currentColor" /></symbol>
+      <symbol id="i-replay" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v3.8h3.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5m0 0-6 6m6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-clip" viewBox="0 0 24 24"><path d="m20 11.5-7.6 7.6a5 5 0 0 1-7.1-7.1l7.8-7.8a3.3 3.3 0 0 1 4.7 4.7l-7.8 7.8a1.7 1.7 0 0 1-2.4-2.4l7.1-7.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-10Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20.5 11.5c0 3.9-3.8 7-8.5 7-1 0-2-.15-2.9-.4L4.5 20l1.3-3.5C4.4 15.2 3.5 13.5 3.5 11.5c0-3.9 3.8-7 8.5-7s8.5 3.1 8.5 7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15l1.5-2ZM10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" /></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.6 4.4 8.4 9 9-4.6.6-8.4 4.4-9 9-.6-4.6-4.4-8.4-9-9 4.6-.6 8.4-4.4 9-9Z" fill="currentColor" /></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.9" /><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" /></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5 5 6v5.5c0 4.3 3 7.6 7 9 4-1.4 7-4.7 7-9V6l-7-2.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+    </defs>
+  </svg>
+</body>
+</html>

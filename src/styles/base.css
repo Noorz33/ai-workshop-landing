@@ -1,0 +1,127 @@
+:root {
+  --bg: #050507;
+  --ink: #0b0b10;
+  --tx: #f3f0ea;
+  --mut: rgba(243, 240, 234, .66);
+  --dim: rgba(243, 240, 234, .42);
+  --line: rgba(255, 255, 255, .085);
+  --line2: rgba(255, 255, 255, .16);
+  --cu: #c4703a;
+  --cu2: #ffb985;
+  --cu3: #7d3f1b;
+  --g1: #4796e3;
+  --g2: #9177c7;
+  --g3: #ca6673;
+  --gem: linear-gradient(100deg, var(--g1), var(--g2) 55%, var(--g3));
+  --copper: linear-gradient(120deg, #ffcfa6, #e08a52 40%, #a8531f 75%, #f0a06b);
+  --acc: #fff;
+  --acc-soft: rgba(255, 255, 255, .14);
+  --f: "Geist Variable", "Vazirmatn Variable", "Vazirmatn", system-ui, sans-serif;
+  --fm: "JetBrains Mono Variable", ui-monospace, Menlo, monospace;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --spring: cubic-bezier(.34, 1.4, .64, 1);
+  --gut: clamp(16px, 3.2vw, 48px);
+  --hdr: 74px;
+  --pw: clamp(340px, 31vw, 450px);
+  --aw: 520px;
+  color-scheme: dark;
+}
+[data-terr="gem"] { --acc: #a8b8ff; --acc-soft: rgba(145, 119, 199, .22) }
+[data-terr="mix"] { --acc: var(--cu2); --acc-soft: rgba(196, 112, 58, .22) }
+
+*, *::before, *::after { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); overflow-x: clip }
+html.lenis, html.lenis body { height: auto }
+.lenis.lenis-stopped { overflow: hidden }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--f);
+  font-size: 16px;
+  line-height: 1.85;
+  font-feature-settings: "ss01";
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+}
+img, svg, canvas { display: block; max-width: 100% }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer }
+a { color: inherit; text-decoration: none }
+h1, h2, h3, h4, p, ul, ol, figure { margin: 0 }
+ul, ol { padding: 0; list-style: none }
+.lt { font-family: var(--f); letter-spacing: -.02em }
+.i { width: 1.1em; height: 1.1em; flex: none }
+.sep { display: inline-block; width: 1px; height: .85em; margin: 0 .6em; vertical-align: -.1em; background: currentColor; opacity: .35 }
+:focus-visible { outline: 2px solid var(--cu2); outline-offset: 3px; border-radius: 8px }
+::selection { background: rgba(196, 112, 58, .45) }
+.skip { position: fixed; z-index: 300; top: 10px; inset-inline-start: 10px; padding: 8px 14px; border-radius: 10px; background: var(--tx); color: var(--bg); transform: translateY(-160%); transition: transform .3s var(--ease) }
+.skip:focus { transform: none }
+.nv .vlogo { display: none !important }
+.vtext { display: none }
+.nv .vtext { display: inline }
+
+/* glass recipe */
+.glass-ui {
+  background: linear-gradient(160deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .018) 60%);
+  border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border-radius: 18px;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .08), 0 30px 80px -34px rgba(0, 0, 0, .9);
+}
+
+/* buttons */
+.btn {
+  --h: 44px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  height: var(--h); padding: 0 20px; border-radius: 999px;
+  font-weight: 600; font-size: 14.5px; white-space: nowrap;
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .3s, border-color .3s;
+}
+.btn:hover { transform: translateY(-2px) }
+.btn:active { transform: translateY(0) scale(.98) }
+.btn--sm { --h: 38px; padding: 0 15px; font-size: 13.5px }
+.btn--lg { --h: 54px; padding: 0 28px; font-size: 16px }
+.btn--copper {
+  color: #1c0d04;
+  background: var(--copper);
+  box-shadow: 0 10px 36px -10px rgba(224, 138, 82, .75), inset 0 1px rgba(255, 255, 255, .55), inset 0 -1px rgba(0, 0, 0, .2);
+}
+.btn--copper:hover { box-shadow: 0 16px 44px -10px rgba(224, 138, 82, .95), inset 0 1px rgba(255, 255, 255, .6) }
+.btn--ghost {
+  background: rgba(255, 255, 255, .06); border: 1px solid var(--line2);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.btn--ghost:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .28) }
+
+/* blossom svg ships with generous padding; size the visible mark, keep clear space */
+.blossom { transform: scale(2.05) }
+
+/* ── loader ── */
+.loader { position: fixed; inset: 0; z-index: 200; display: grid; place-content: center; justify-items: center; gap: 22px; background: radial-gradient(60% 50% at 50% 46%, #111016, var(--bg)); transition: opacity .7s var(--ease), visibility .7s }
+.flat .loader, .loader[hidden] { display: none }
+.loader.done { opacity: 0; visibility: hidden }
+.loader-mark { width: 84px; height: 84px; animation: ld-breathe 2.4s var(--ease) infinite; filter: drop-shadow(0 0 22px rgba(255, 185, 133, .35)) }
+.loader-line { width: 180px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .1); overflow: hidden }
+.loader-line i { display: block; height: 100%; background: var(--copper); transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease) }
+.loader-txt { font-size: 13px; color: var(--dim) }
+@keyframes ld-breathe { 0%, 100% { transform: rotate(0) scale(1); opacity: .85 } 50% { transform: rotate(25deg) scale(1.05); opacity: 1 } }
+
+/* ── world layers ── */
+#world { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: none }
+.spatial #world { display: block }
+.veil { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(120% 95% at 50% 45%, transparent 55%, rgba(5, 5, 7, .7) 100%), linear-gradient(rgba(5, 5, 7, .55), transparent 18% 82%, rgba(5, 5, 7, .5)) }
+.grain { position: fixed; inset: -50%; z-index: 2; pointer-events: none; opacity: .06; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") }
+.flat .veil, .flat .grain { display: none }
+.flat body {
+  background:
+    radial-gradient(60% 40% at 15% 8%, rgba(255, 255, 255, .06), transparent 70%),
+    radial-gradient(50% 35% at 85% 55%, rgba(145, 119, 199, .14), transparent 70%),
+    radial-gradient(40% 30% at 30% 92%, rgba(196, 112, 58, .12), transparent 70%),
+    var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important }
+}
