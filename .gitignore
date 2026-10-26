@@ -7,3 +7,5 @@ dist/
 *.docx
 Hoosh saze logo .png
 donyay mes logo .png
+.vercel
+.env*
